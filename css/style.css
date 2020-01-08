@@ -1,0 +1,201 @@
+/*body style*/
+body{
+    background-color: #dfe0d9;
+    font-size: 17px;
+}
+h1{
+    text-align: center;  
+}
+.logo{
+    width:150px;
+    height:45px;
+}
+/* Style inputs with type="text", select elements and textareas */
+
+label{
+    font-weight : bold;
+    font-size: 110%;
+    
+}
+.form-group{
+    margin-bottom: 50px;
+}
+.form-control{
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+.form-control input[type="text"], input[type="date"]{
+text-align: right;
+}
+#search,#searchTo,#searchDateFrom,#searchDateTo,#year,#month{
+    margin-bottom:3px;
+}
+/* Add a background color and some padding around the form */
+.container {
+    width: 100%;
+    border-radius: 5px;
+    /* background-color: #f2f2f2; */
+    /*padding: 20px;*/
+    margin: auto;
+
+}
+.left{
+    width: 45% ;
+    float: left;
+
+}
+.right{
+    width: 45%;
+    float: right;
+}
+.table td,th {
+   text-align: center !important;   
+}
+.btn{
+    margin-bottom: -5px !important;
+}
+.form-signin{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.navbar-nav{
+    /* margin-bottom: 0; */
+    font-size: 21px;
+}
+.navbar-inverse {
+    background-color: #a5a1a1;
+    border-color: #940308;
+    font-size: 14px;
+}
+.navbar-inverse .navbar-brand {
+    color: #0a0707;
+    font-size:14px;
+    margin-bottom: -15px;
+    padding: 0;
+    font-weight: bold;
+}
+.navbar-inverse .navbar-brand:hover, 
+.navbar-inverse .navbar-brand:focus {
+  background-color: transparent;
+  color: #000000;
+}
+/*.navbar-nav>li>a {*/
+.navbar-inverse .navbar-nav>li>a{
+    /*font-size: 1em;*/
+    color: #0a0707;
+    padding-bottom: 2px;
+}
+.navbar-inverse {
+    background-color: #a5a1a1;
+    border-color: #940308;
+    font-size: 17px;
+    padding-bottom: 3px;
+    margin-bottom: 0px;
+}
+
+/*pending and confirmed tables*/
+#pendingVac,#pendingPermit,#confirmedVac,#confirmedPermit,
+#myVacStatus,#myPermitStatus,#pendingVacAtTopmgr{
+    font-size: 13px;
+    font-weight: bold;
+}
+#pendingVac th ,#confirmedVac th,#pendingPermit th,#confirmedPermit th,
+#confirmedVacReport th,#myVacStatus th,#myPermitStatus th{
+    font-size: 16px;
+}
+#pendingVac th ,#pendingPermit th,#confirmedVac th,#confirmedPermit th,
+#empData th,#myVacStatus th,#myPermitStatus th,#pendingVacAtTopmgr th{
+    background-color: #999999;
+}
+#confirmedVacReport{
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Arial";
+}
+
+.table-striped>tbody>tr:nth-child(even)>td {
+   background-color: #bfbfbf; 
+ }
+
+#year{
+    width: 10%;
+}
+.vac-credit{
+    font-size: 20px;
+    margin-bottom: 2px; 
+  
+}
+.vac-credit > span {
+    float: left;
+    margin-left: 2px;
+    font-weight: bold;
+    font-family: "Arial"; 
+}
+.delete_vacation,.delete_permit{
+    color: #940308;
+}
+.managements-container,.jobs-container{
+    margin: 0 auto;
+}
+.managements,.jobs{
+    background-color: #c2bfbfc4;
+    text-align: center;
+    font-weight: bold;
+    margin:10px 0;
+}
+.managements:hover,.jobs:hover{
+    background-color: #940308;
+    color: #f2f2f2;
+}
+#addManagementModal  input[type="submit"]:hover , #editManagementModal  input[type="submit"]:hover,
+#addjobModal  input[type="submit"]:hover , #editjobModal  input[type="submit"]:hover{
+    background-color: #940308;
+    color: #fff;
+}
+
+#activePage{
+    color:  #940308;
+}
+#scroll_down, #scroll_up{
+    position: fixed;
+    bottom: 18px;
+    right: 12px;
+    border: none;
+    background: #DCDCDC;
+    padding: inherit;
+}
+.dropdown {
+    display: inline;
+
+}
+.dropdown-menu-right {
+    TOP: AUTO;
+}
+
+.dropdown-menu > li {
+    font-size: 16px;
+    text-align: center;
+
+}
+.dropdown-menu > li > a:hover {
+    background-color: #685d5d;
+    font-weight: bold;
+    /* background-image: none; */
+}
+.dropdown-toggle {
+    font-weight: bold;
+    font-size: 17px;
+    margin-top: 1rem;
+    color: #000000;
+    background-color: #d4c8c8;
+    border:none;
+    /* padding-bottom: 2rem; */
+}
+.dropdown-header{
+    background-color: #d4c8c1;
+    font-weight: bold;
+}
+.label-toggle{
+    color:gray;
+}
