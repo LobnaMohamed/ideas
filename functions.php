@@ -468,8 +468,24 @@
 	}
 	function getRatedideas(){
 		$con = connect();
-		$sql = "SELECT ID,idea_text,Avg(ideasratings.rating) from ideas inner join ideasratings
-				on  ideas.ID = ideasratings.idea_id";
+		$sql = "SELECT dateCreated,idea_text,ideas.rating,count(ideasratings.rating)as countedrates
+				FROM ideas  INNER join ideasratings on ideas.ID = ideasratings.idea_id
+				where ideasratings.rating >0";
+
+		$stmt = $con->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		//loop for rating
+		foreach($result as $row){
+
+			echo"<tr>";
+				echo"<td>".  $row['dateCreated']. "</td>";
+				echo"<td>".  $row['idea_text']. "</td>";
+				echo"<td>". $row['rating']. "</td>";
+				echo"<td>". $row['countedrates']. "</td>";
+
+			echo "</tr>";
+		} 
 	}
 
 	/****************************************************** */

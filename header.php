@@ -123,7 +123,19 @@
 							<!-- <li><a href="mypermitstatus.php">التصــــاريح</a></li> -->
 						</ul>
 					</div>
-					<a href="ideamodel.php"  class="btn btn-primary dropdown-toggle">طور شركتك بفكرتك!</a>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">طور شركتك بفكرتك!
+						<span class="caret"></span></button>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li><a href="ideamodel.php"  >طور شركتك بفكرتك!</a></li>
+							<li><a href="pendingideas.php"  >الافكار المطلوب تقييمها</a></li>
+							<li><a href="assignideas.php"  >اسناد الافكار</a></li>
+							<li><a href="ratedideas.php">الافكار التى تم تقييمها</a></li>
+							
+
+						</ul>
+					</div>
+					<!-- <a href="ideamodel.php"  class="btn btn-primary dropdown-toggle">طور شركتك بفكرتك!</a> -->
 					<a href="logout.php"  class="btn btn-primary dropdown-toggle">خــــروج</a>
 				<?php 
 					}

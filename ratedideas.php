@@ -12,7 +12,7 @@
 	<div class="container">
 	    <header class="row text-center">
 	    	<!-- <img class= "col-lg-2 logo" src="images/amoc2.png"> -->
-	  	    <h1 class="col-sm-12">الافكار المطلوب تقييمها</h1>  
+	  	    <h1 class="col-sm-12">الافكار التى تم تقييمها</h1>  
 	    </header>
 	    <!-- search for emp code -->
 <!-- 		<form class="navbar-form" role="search" id="searchEmp" method="GET">
@@ -35,14 +35,16 @@
 		</form>
 
 		<!-- form to show pending vacations and confirm them -->
-	    <!-- <form class="form-horizontal row" method="POST" action="done.php">  -->
+	    <form class="form-horizontal row" method="POST" action="done.php"> 
 	    <!-- action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" -->
 	    	<table id="pendingVac" class="table table-striped table-bordered table-responsive">		
 				<thead>
 					<tr>
-						<th class="col-xs-2">التاريخ</th>
-						<th class="col-xs-7">الفكرة</th>
-						<th class="col-xs-3">التقييم</th>
+						<th class="col-xs-1">التاريخ</th>
+						<th class="col-xs-9">الفكرة</th>
+						<th class="col-xs-1">التقييم</th>
+						<th class="col-xs-1">عدد المقيميين</th>
+
 						
 				    </tr>		
 				</thead>
@@ -51,15 +53,15 @@
 					//check if the logged in manager or top manager or admin then 
 					//run the corresponding function 
 						// if($_SESSION['UserGroup']==7) { //top manager
-							getPendingideas();
+							getRatedideas();
 						// }
 
 					?>
 				</tbody>
 			</table>
-			<!-- <div>
+			<div>
 				<input type="submit" name="updateRating" value="إعتمــــاد" id="ideaAgree" class="btn btn-success col-sm-2 col-sm-offset-5">
 			</div>			
-		 </form>		 -->
+		 </form>		
 	</div> 
 	<?php	include 'footer.php'; ?>
