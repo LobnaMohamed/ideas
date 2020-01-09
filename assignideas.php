@@ -40,7 +40,13 @@
 	    	<table id="pendingVac" class="table table-striped table-bordered table-responsive">		
 				<thead>
 					<tr>
-						<th>الفكرة</th>
+						<th class="col-xs-1"> التاريخ</th>
+
+						<th class="col-xs-4"> الفكرة</th>
+						<th class="col-xs-2">jury1</th>
+						<th class="col-xs-2">jury2</th>
+						<th class="col-xs-2">jury3</th>
+
 
 				    </tr>		
 				</thead>
@@ -56,7 +62,7 @@
 				</tbody>
 			</table>
 			<div>
-				<input type="submit" name="updateRating" value="إعتمــــاد" id="ideaAgree" class="btn btn-success col-sm-2 col-sm-offset-5">
+				<input type="submit" name="assignideas" value="إعتمــــاد" id="ideaAgree" class="btn btn-success col-sm-2 col-sm-offset-5">
 			</div>			
 		 </form>		
 	</div> 

@@ -40,11 +40,9 @@
 	    	<table id="pendingVac" class="table table-striped table-bordered table-responsive">		
 				<thead>
 					<tr>
-						<th>التاريخ</th>
-
-						<th>الفكرة</th>
-						<th>التقييم</th>
-
+						<th class="col-xs-2">التاريخ</th>
+						<th class="col-xs-7">الفكرة</th>
+						<th class="col-xs-3">التقييم</th>
 						
 				    </tr>		
 				</thead>

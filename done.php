@@ -22,8 +22,14 @@
 		insertRatings();
 		header("Location:pendingideas.php");
 	}
-
-
+	elseif (isset($_POST['assignideas']))
+	{
+	    // Form has been submitted
+		saveAssignedIdeas();
+		header("Location:assignideas.php");
+		
+	}
+	
 
 	//SUBMIT AGREE ON PERMITS
 	if (isset($_POST['updatePermit']))

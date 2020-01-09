@@ -296,6 +296,7 @@
 			    echo "<option value=" .$row['ID'].">" . $row['reason'] . "</option>";
 			}
 	}
+	/****************************************************************** */
 	//----------------------------------------
 	//----ideas functions
 	//------------------------------------------
@@ -329,13 +330,12 @@
 	}
 	function getPendingideas(){
 		$con = connect();
-		$sql ="SELECT * FROM ideas";
-		
+		$sql ="SELECT * FROM ideas inner join ideasratings on ideas.ID = ideasratings.idea_id
+				where  ideasratings.emp_id = {$_SESSION['UserID']} and ideasratings.rating = 0 ";
 		$stmt = $con->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
-		
-	
+		//loop for rating
 		foreach($result as $row){
 			$index= $row['ID'];
 
@@ -344,11 +344,11 @@
 				echo"<td>".  $row['dateCreated']. "</td>";
 				echo"<td>".  $row['idea_text']. "</td>";
 				echo'<td>';
-					for( $i=1; $i<6; $i++){
-						echo '
-						<input type="radio" class="radio-inline "
-							name="rating['.$index.']" value ="'.$i.'" >
-						'.$i.'&nbsp;';
+					for( $i=5; $i>0; $i--){
+						echo '<span class="box"><input type="radio" class="radio-inline "
+						name="rating['.$index.']" value ="'.$i.'" >
+					'.$i.'&emsp;</span>
+						';
 							
 					};
 					
@@ -357,55 +357,120 @@
 		} 
 	}
 	function insertRatings(){
-		$rating = $_POST['rating'];
+		
 
-		if(isset($rating)){
+		if(isset($_POST['rating'])){
+			print_r( $_POST['rating']);
 			$con = connect();
 			
 			//Iterate through each answer
-			foreach($rating as $key => $answer) {
-				$getRating = "select rating from ideas where ID = $key";
-				$stmt = $con->prepare($getRating);
+			foreach($_POST['rating'] as $idea => $rating) {
+				//insert rating in table idea ratings
+				$insertRating = "UPDATE ideasratings
+								 set rating = $rating 
+								 where idea_id = $idea
+								 and emp_id = {$_SESSION['UserID']}";
+				$stmt = $con->prepare($insertRating);
 				$stmt->execute();
-				$ratingresult = $stmt->fetchColumn();
-				if($ratingresult>0){
-					$newRate = ($ratingresult + $answer)/2;
-				}else{
-					$newRate = $answer;
-				}
-				
-				$sql = "UPDATE ideas SET rating =$newRate where ID= $key";
-				$stmt2 = $con->prepare($sql);
-				$stmt2->execute();
+				//insert rating in table ideas
+				$stmt = $con->prepare('CALL addRating(?, ?)');
+				$stmt->bindValue(1, $idea, PDO::PARAM_INT);
+				$stmt->bindValue(2, $rating, PDO::PARAM_INT);
+				$stmt->execute();
+
 			}
 		}
 	
 	}
 	function assignideas(){
 		$con = connect();
-		$sql ="SELECT * FROM ideas";
+		$sql ="SELECT * FROM ideas where ID not in(select idea_id from ideasratings) ";
 		
 		$stmt = $con->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
-		
-	
 		foreach($result as $row){
 			$index= $row['ID'];
+			echo"<tr>";
+				echo"<td>".  $row['dateCreated']. "</td>";
+				echo"<td >".  $row['idea_text']. "</td>";
+				echo'<td><select name="jury1['.$index.']" class="form-control">';
+					getManagers();
+				echo '</select>
+				</td>';
 
-			echo"<div>";
-				echo  $row['idea_text'];
-				echo '<select class="form-control" id="manager" name="manager" tabindex="2">
-						<option selected disabled hidden style="display: none" value=""></option>
-							'. getManagers();'
-							</select>';
-						
-					
-				// echo '</td>';
-			echo "</div>";
-		} 
+				echo'<td><select name="jury2['.$index.']" class="form-control">';
+					getManagers();
+				echo '</select>
+				</td>';
+
+				echo'<td><select name="jury3['.$index.']" class="form-control">';
+					getManagers();
+				echo '</select>
+				</td>';
+			echo "</tr>";
+		}
 	}
 
+	function saveAssignedIdeas(){
+
+		$con = connect();
+		if(isset($_POST['jury1'])){
+			foreach($_POST['jury1'] as $idea_id => $emp_jury1){
+				echo $idea_id;
+				echo $emp_jury1;
+				if($emp_jury1 >0){
+					$sql = "insert into ideasratings(emp_id,idea_id)values($emp_jury1,$idea_id)";
+					$stmt = $con->prepare($sql);
+					// $stmt->bindParam(':emp', $emp_jury1, PDO::PARAM_INT);
+					// $stmt->bindParam(':idea',$idea_id , PDO::PARAM_INT);
+					
+					//$stmt->execute(array($answer));
+					$stmt->execute();
+				}
+
+			}
+		if($_POST['jury2']){
+			foreach ($_POST['jury2'] as $idea_id => $emp_jury2) {
+				echo $idea_id;
+				echo $emp_jury2;
+				if($emp_jury2>0){
+					$sql = "insert into ideasratings(emp_id,idea_id)values(:emp,:idea)";
+					$stmt = $con->prepare($sql);
+					$stmt->bindParam(':emp', $emp_jury2, PDO::PARAM_INT);
+					$stmt->bindParam(':idea', $idea_id, PDO::PARAM_INT);
+					
+					//$stmt->execute(array($answer));
+					$stmt->execute();
+				}
+
+			}
+		}
+		if($_POST['jury3']){
+			foreach ($_POST['jury3'] as $idea_id => $emp_jury3) {
+				echo $idea_id;
+				echo $emp_jury3;
+				if($emp_jury3>0){
+					$sql = "insert into ideasratings(emp_id,idea_id)values(:emp,:idea)";
+					$stmt = $con->prepare($sql);
+					$stmt->bindParam(':emp', $emp_jury3, PDO::PARAM_INT);
+					$stmt->bindParam(':idea', $idea_id, PDO::PARAM_INT);
+					
+					//$stmt->execute(array($answer));
+					$stmt->execute();
+				}
+
+			}
+		}
+
+		}
+
+	}
+	function getRatedideas(){
+		$con = connect();
+		$sql = "SELECT ID,idea_text,Avg(ideasratings.rating) from ideas inner join ideasratings
+				on  ideas.ID = ideasratings.idea_id";
+	}
 
 	/****************************************************** */
 
