@@ -6,11 +6,10 @@
 	}
 	require 'functions.php';
 	include 'header.php';
-
 ?>
 <div class="container">
     <header class="row text-center">
-	<img class= "logo col-sm-1" src="images/amoc2.png">
+		<img class= "logo col-sm-1" src="images/amoc2.png">
   	    <h1 class="col-sm-4 col-sm-offset-2 ">نموذج الاجـــــازة</h1>	    
     </header>	  
     <form  method="POST" action="add.php" id="vacForm" onsubmit="return confirm('تأكيد ارسال الاجازة');">

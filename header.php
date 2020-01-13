@@ -20,25 +20,24 @@
 	<nav class="navbar navbar-inverse fixed-top">
 
 		<div class="container-fluid">
-			<div class="navbar-header ">
-		  		<!-- <a class="navbar-brand" href="#">Computer Name: <?php  
-						if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
-					    {
-					      $ip=$_SERVER['HTTP_CLIENT_IP'];
-					    }
-					    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
-					    {
-					      $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-					    }
-					    else
-					    {
-					      $ip=$_SERVER['REMOTE_ADDR'];
-					    }
-					    echo $ip;   
-		  		 ?></a> -->
+			<div class="navbar-header">
+				<?php  
+					if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
+					{
+						$ip=$_SERVER['HTTP_CLIENT_IP'];
+					}
+					elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
+					{
+						$ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+					}
+					else
+					{
+						$ip=$_SERVER['REMOTE_ADDR'];
+					}
+					echo $ip;   
+		  		 ?></a>
 				<div class="navbar-brand">
-				   
-					<span >Computer Name: <?php echo gethostbyaddr($_SERVER['REMOTE_ADDR']); ?>
+					<span><?php echo gethostbyaddr($_SERVER['REMOTE_ADDR']); ?>
 						<img class= "logo col-sm-1" src="images/amoc2.png"><br>
 						<?php if (isset($_SESSION['Username'])){ 
 								echo $_SESSION['UserFullName'] ;
@@ -46,15 +45,11 @@
 						?>
 					</span>
 				</div>
-				<div>
-							
-				</div>
 			</div>
 			
 			<div class="navbar-header navbar-right">
 			  <span class="navbar-brand">شركة الأسكندرية للزيوت المعدنية ( أموك )</span>  
 			</div>
-
 			<ul class="nav navbar-nav pull-right">
 				<?php
 					if (isset($_SESSION['Username']))
@@ -69,7 +64,7 @@
 					</ul>
 				</div>
 			   <!-- emp or manager or top manager in adminstration -->
-				<?php if($_SESSION['UserGroup']==3  || $_SESSION['UserGroup']==5 || $_SESSION['UserGroup']==6){ ?>
+				<?php if($_SESSION['UserGroup']==3  || $_SESSION['UserGroup']==5 || $_SESSION['UserGroup']==6){?>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">بيانـــات
 						<span class="caret"></span></button>
@@ -88,18 +83,9 @@
 							<li><a href="pendingAtTopmgr.php">الاجازات المعلقة عند المدير</a></li>							
 						</ul>
 					</div>
-					<!-- <div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> إعتمادات التصاريح
-						<span class="caret"></span></button>
-						<ul class="dropdown-menu dropdown-menu-right">
-							<li><a href="pendingPermit.php">التصاريح المطلوب تسجيلها</a></li>
-							<li><a href="confirmedPermit.php">التصاريح المسجلة</a></li>
-						</ul>
-					</div> -->
-					
 				<?php 
 				// direct manager or top manager
-					 }elseif($_SESSION['UserGroup']==1 || $_SESSION['UserGroup']==2){ ?>
+					 }elseif($_SESSION['UserGroup']==1 || $_SESSION['UserGroup']==2){?>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">إعتمادات
 						<span class="caret"></span></button>
@@ -112,9 +98,7 @@
 							<li><a href="confirmedPermit.php">التصاريح المعتمدة</a></li>	 -->
 						</ul>
 					</div>
-				<?php 	   
-					 }
-				?>
+				<?php }?>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">سجـــلات
 						<span class="caret"></span></button>
@@ -125,21 +109,16 @@
 					</div>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">طور شركتك بفكرتك!
-						<span class="caret"></span></button>
+						<span class="caret"></span><img height="23px" width="50px" src="images/new-purple-animation.gif"></button>
 						<ul class="dropdown-menu dropdown-menu-right">
-							<li><a href="ideamodel.php"  >طور شركتك بفكرتك!</a></li>
-							<li><a href="pendingideas.php"  >الافكار المطلوب تقييمها</a></li>
+							<li><a href="ideamodel.php">طور شركتك بفكرتك!</a></li>
+							<li><a href="pendingideas.php">الافكار المطلوب تقييمها</a></li>
 							<li><a href="assignideas.php"  >اسناد الافكار</a></li>
 							<li><a href="ratedideas.php">الافكار التى تم تقييمها</a></li>
-							
-
 						</ul>
 					</div>
-					<!-- <a href="ideamodel.php"  class="btn btn-primary dropdown-toggle">طور شركتك بفكرتك!</a> -->
 					<a href="logout.php"  class="btn btn-primary dropdown-toggle">خــــروج</a>
-				<?php 
-					}
-			 	?>
+				<?php }?>
 			</ul>
 		</div>
 	</nav>

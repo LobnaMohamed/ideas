@@ -574,4 +574,12 @@ $(document).ready(function(){
 		$("label[for=returnTime]").toggleClass("label-toggle",!$(this).is(':checked'));
 		
 	 });
+
+
+	 $("#Add").on("click", function() {  
+		$("#textboxDiv").append("<div><br><input type='text'/><br></div>");  
+	});  
+	$("#Remove").on("click", function() {  
+		$("#textboxDiv").children().last().remove();  
+	});  
 });

@@ -308,9 +308,6 @@
 		if(isset($_POST['submitidea'])){
 			//assign variables
 			$empID=isset($_POST['empID'])? filter_var($_POST['empID'],FILTER_SANITIZE_NUMBER_INT):'';
-			
-
-			// $ideaCode= isset($_POST['code'])? filter_var($_POST['code'],FILTER_SANITIZE_NUMBER_INT):'';
 			$ideatext = isset($_POST['ideatext'])? filter_var($_POST['ideatext'],FILTER_SANITIZE_STRING) : '';
 			$username=$_SESSION['Username']; // user id
 			if (gethostbyaddr($_SERVER['REMOTE_ADDR']) != null){
@@ -323,7 +320,7 @@
 			$con = connect();
 			$sql= "INSERT INTO ideas(emp_id,idea_text,made_by_user,made_by_ip) 
 					VALUES (".$empID.",'".$ideatext."','".$username."','".$userIP."')" ;
-					//echo $sql;
+
 			$stmt = $con->prepare($sql);
 			$stmt->execute();		
 		}
@@ -360,7 +357,7 @@
 		
 
 		if(isset($_POST['rating'])){
-			print_r( $_POST['rating']);
+			//print_r( $_POST['rating']);
 			$con = connect();
 			
 			//Iterate through each answer
@@ -470,7 +467,8 @@
 		$con = connect();
 		$sql = "SELECT dateCreated,idea_text,ideas.rating,count(ideasratings.rating)as countedrates
 				FROM ideas  INNER join ideasratings on ideas.ID = ideasratings.idea_id
-				where ideasratings.rating >0";
+				where ideasratings.rating >0
+				group by dateCreated,idea_text,ideas.rating";
 
 		$stmt = $con->prepare($sql);
 		$stmt->execute();
@@ -808,7 +806,7 @@
 	function editJob(){
 
 		//assign variables
-		$jobtID=isset($_POST['job_id'])? filter_var($_POST['job_id'],FILTER_SANITIZE_NUMBER_INT):'';
+		$jobID=isset($_POST['job_id'])? filter_var($_POST['job_id'],FILTER_SANITIZE_NUMBER_INT):'';
 		$jobName= isset($_POST['jobEdit'])? filter_var($_POST['jobEdit'],FILTER_SANITIZE_STRING) : '';
 		echo $jobID;
 		echo $jobName;

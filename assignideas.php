@@ -21,18 +21,18 @@
 				<input class="form-control" placeholder="ابحث.." name="search" id="search" type="text">
 			</div>
 		</form> -->
-		<form class="navbar-form row" role="search" id="searchEmp" method="GET" action="adminreport_forpending.php">
+		<!-- <form class="navbar-form row" role="search" id="searchEmp" method="GET" action="adminreport_forpending.php">
 			<div class="form-group add-on ">
 				<label for = "search">رقم القيد:</label>
 				<input class="form-control" placeholder=" ابحث رقم قيد" name="search" id="search" type="text"> 
 				<?php
-				if($_SESSION['UserGroup']==7){?>
-					<label for = "searchTo"> إلى:</label>
-					<input class="form-control" placeholder="الى رقم قيد" name="searchTo" id="searchTo" type="text">	
-					<input  type="submit" class= "form-control btn btn-primary" value="تقرير">
-				<?php }	?>
+				// if($_SESSION['UserGroup']==7){?>
+				// 	<label for = "searchTo"> إلى:</label>
+				// 	<input class="form-control" placeholder="الى رقم قيد" name="searchTo" id="searchTo" type="text">	
+				// 	<input  type="submit" class= "form-control btn btn-primary" value="تقرير">
+				// <?php //}	?>
 			</div> 			
-		</form>
+		</form> -->
 
 		<!-- form to show pending vacations and confirm them -->
 	    <form class="form-horizontal row" method="POST" action="done.php"> 

@@ -21,22 +21,22 @@
 				<input class="form-control" placeholder="ابحث.." name="search" id="search" type="text">
 			</div>
 		</form> -->
-		<form class="navbar-form row" role="search" id="searchEmp" method="GET" action="adminreport_forpending.php">
+		<!-- <form class="navbar-form row" role="search" id="searchEmp" method="GET" action="adminreport_forpending.php">
 			<div class="form-group add-on ">
 				<label for = "search">رقم القيد:</label>
 				<input class="form-control" placeholder=" ابحث رقم قيد" name="search" id="search" type="text"> 
 				<?php
-				if($_SESSION['UserGroup']==7){?>
+				//if($_SESSION['UserGroup']==7){?>
 					<label for = "searchTo"> إلى:</label>
 					<input class="form-control" placeholder="الى رقم قيد" name="searchTo" id="searchTo" type="text">	
 					<input  type="submit" class= "form-control btn btn-primary" value="تقرير">
-				<?php }	?>
+				<?php //}	?>
 			</div> 			
-		</form>
+		</form> -->
 
 		<!-- form to show pending vacations and confirm them -->
-	    <!-- <form class="form-horizontal row" method="POST" action="done.php">  -->
-	    <!-- action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" -->
+	    <form class="form-horizontal row" method="POST" action="done.php"> 
+	    	<!-- action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" -->
 	    	<table id="pendingVac" class="table table-striped table-bordered table-responsive">		
 				<thead>
 					<tr>
@@ -57,9 +57,9 @@
 					?>
 				</tbody>
 			</table>
-			<!-- <div>
+			<div>
 				<input type="submit" name="updateRating" value="إعتمــــاد" id="ideaAgree" class="btn btn-success col-sm-2 col-sm-offset-5">
 			</div>			
-		 </form>		 -->
+		</form>		
 	</div> 
 	<?php	include 'footer.php'; ?>

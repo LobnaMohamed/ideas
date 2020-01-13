@@ -3,25 +3,25 @@
 	if(isset($_SESSION['Username'])){
 	//echo "Welcome" . $_SESSION['Username'];
 	}else{
-	header('Location: index.php');//redirect
+		header('Location: index.php');//redirect
 	exit();
 	}
 	include 'header.php';
 	// Include config file
 	include 'functions.php';
 	if(isset($_POST['submitVac'])){
+		ob_start() ;
 		addVacation();
-		// echo "<h1>تم ارسال الاجازة بنجاح !</h1>";
+		ob_flush();
 		header('Location: vacationmodel.php');//redirect
+		exit();
 	}
-	if(isset($_POST['submitPermit'])){
+	elseif(isset($_POST['submitPermit'])){
 		addPermit();
-		echo "<h1>تم ارسال التصريح بنجاح !</h1>";
 		header('Location: permitModel.php');//redirect
 	}
-	if(isset($_POST['submitidea'])){
+	elseif(isset($_POST['submitidea'])){
 		addidea();
-		// echo "<h1>تم ارسال الاجازة بنجاح !</h1>";
 		header('Location: ideamodel.php');//redirect
 	}
 ?>
