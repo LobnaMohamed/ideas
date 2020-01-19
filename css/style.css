@@ -97,16 +97,16 @@ text-align: right;
 
 /*pending and confirmed tables*/
 #pendingVac,#pendingPermit,#confirmedVac,#confirmedPermit,
-#myVacStatus,#myPermitStatus,#pendingVacAtTopmgr{
+#myVacStatus,#myPermitStatus,#pendingVacAtTopmgr,#overtimeTable{
     font-size: 13px;
     font-weight: bold;
 }
 #pendingVac th ,#confirmedVac th,#pendingPermit th,#confirmedPermit th,
-#confirmedVacReport th,#myVacStatus th,#myPermitStatus th{
+#confirmedVacReport th,#myVacStatus th,#myPermitStatus th,#overtimeTable th{
     font-size: 16px;
 }
 #pendingVac th ,#pendingPermit th,#confirmedVac th,#confirmedPermit th,
-#empData th,#myVacStatus th,#myPermitStatus th,#pendingVacAtTopmgr th{
+#empData th,#myVacStatus th,#myPermitStatus th,#pendingVacAtTopmgr th,#overtimeTable th{
     background-color: #999999;
 }
 #confirmedVacReport{

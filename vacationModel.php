@@ -8,10 +8,13 @@
 	include 'header.php';
 ?>
 <div class="container">
-    <header class="row text-center">
+    <!-- <header class="row text-center">
 		<img class= "logo col-sm-1" src="images/amoc2.png">
   	    <h1 class="col-sm-4 col-sm-offset-2 ">نموذج الاجـــــازة</h1>	    
-    </header>	  
+    </header> -->
+	<div class="page-header text-center">
+        <h1>نمـــوذج الاجـــــازة</h1> 
+    </div>	  
     <form  method="POST" action="add.php" id="vacForm" onsubmit="return confirm('تأكيد ارسال الاجازة');">
     	<div class="row form-group">
     		<div class="col-sm-3">

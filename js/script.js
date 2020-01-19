@@ -1,3 +1,13 @@
+$.extend({ alert: function (message, title) {
+	$("<div></div>").dialog( {
+	  buttons: { "Ok": function () { $(this).dialog("close"); } },
+	  close: function (event, ui) { $(this).remove(); },
+	  resizable: true,
+	  title: title,
+	  modal: true
+	}).text(message);
+  }
+  });
 /*global $, alert, console*/
 $(document).ready(function(){
 
@@ -519,26 +529,8 @@ $(document).ready(function(){
 		});
 	});
 	//--------------onsubmit edit emp form-----------------------------
-	$(document).on('submit','#editEmpForm', function(){
-		//alert("hi");
-		//e.preventDefault();
-		var $form = $('#editEmpForm');
 
-		$.ajax({
-			url:"insert.php",
-			method:"POST",
-			data: $('form#editEmpForm').serialize(),
-			//dataType:"json",
-
-			success:function(data){
-				//console.log(data);
-				$("#editEmpModal").modal('hide');	
-			},
-			error: function(error) {
-            	alert(error);
-        	}
-		});		
-	});
+	
 
 	//--------------onsubmit edit vacation form-----------------------------
 	$(document).on('submit','#editVacForm', function(){
@@ -575,11 +567,127 @@ $(document).ready(function(){
 		
 	 });
 
+	//assign ideas msgs--------------------------------------------------------------------------
+	$(document).on('submit','#assignideasform', function(e){
+		e.preventDefault();
+		//console.log($('form#assignideasform'));
+		$.ajax({
+			url:'done.php',
+			method:"POST",
+			data: $('form#assignideasform').serialize(),
+			dataType:"json",
+			success:function(data){
+				console.log(data);			
+				if(data == "rest of jury are not set"){
+					//alert("Sorry! you have to choose 3 juries for each idea");
+					$.alert("Sorry! you have to choose 3 juries for each idea", "error")		
+				}else if(data == "duplicate jury!"){
+					alert("Sorry! you have to choose <strong>3 DIFFERENT </strong> juries for each idea");
+			    }else if(data == "nothing"){
+					alert("nothing");
+			    }else if(data == "success"){
+					alert("ideas assigned successfully ");
+					
+					window.location.reload();
+			    }
+			},
+			error: function(error) {
+				//alert(error);
+				console.log(error);
+			}
+		});	
+		
+	});
+	
+	//adding inputs to overtime form---------------------------------------------------
+	
+	var counter = 2 ;
+	var inputcount = 1;
+	$("#Add").on("click", function() {  
+		//overtimeindex ++;
+		//console.log(counter);
+		$("#overtimebody").append(
+			'<tr id="index['+counter+']"><td><input type="number" class="form-control inputcode" id="code['+counter+']" name="code['+counter+']" placeholder="رقم القيد.." tabindex="1">'+
+			'<input hidden type="text" id="emp['+counter+']" name="empID['+counter+']" class="inputID"/></td><td><input type="text" class="form-control inputname" id="name['+counter+']" name="name['+counter+']"'+ 
+			'placeholder="الاســـــم.." required readonly></td><td><input type="text" class="form-control" id="reason['+counter+']" name="reason['+counter+']" value="حاجه العمل" tabindex="2"></td>'+
+			'<td><input type="text" class="form-control" id="hoursTill['+counter+']" name="hoursTill['+counter+']" value="فور الانتهاء" tabindex="3"></td><td><select class="form-control" id="overtimeType['+counter+']" name="overtimeType['+counter+']" tabindex="4">'+
+			'<option   value="إضافي">إضافي</option><option   value="بدل راحة">بدل راحة</option></select></td></tr>'); 
+			counter++; 
+			inputcount ++;
+			// console.log(counter);
+	});  
+	$("#remove").on("click", function() {  
+		var $last = $('#overtimeTable tbody').find('tr:last');
+		if($last.is(':first-child')){
+			alert('last is the only one');
+		}else {
+			$last.remove();
+			counter --;
+			inputcount --;
+			// console.log(counter);
+		}
+	});  
 
-	 $("#Add").on("click", function() {  
-		$("#textboxDiv").append("<div><br><input type='text'/><br></div>");  
-	});  
-	$("#Remove").on("click", function() {  
-		$("#textboxDiv").children().last().remove();  
-	});  
+
+	// $(".inputcode").bind("change", function(){
+	$(document).on('change','.inputcode', function(){ //to sense any new DOM element
+		console.log(counter);	
+		if (document.hasFocus()) {
+			var empCode =  $(this).val();
+			var ID = $( this ).attr( "id" );
+			var empnameID = $(this).closest("tr").find(".inputname").attr( "id" ) ;
+			var empidID = $(this).closest("tr").find(".inputID").attr( "id" ) ;
+
+			var obj = document.getElementById(empnameID);
+			var obj2 = document.getElementById(empidID);
+
+			console.log( obj);
+			if($.trim(empCode) !=""){
+				$.ajax({
+					url:"ajax.php",
+					method:"POST",
+					data:{code:empCode},
+					dataType:'json',
+					success:function(data){
+						console.log(data.empName);
+						if(data == "notfound"){
+							alert("رقم القيد غير مسجل \n من فضلك ادخل رقم صحيح!");
+						}else{
+						obj.value = data.empName;
+						obj2.value = data.empID;
+						console.log( obj2.value);
+
+						}
+					} ,
+					error: function(){ 
+						alert("Something went wrong!");
+					}
+				});
+			}
+		}
+	});
+
+	//on submitting overtimeForm:
+
+	$(document).on('submit','#overtimeForm', function(){
+		//alert("hi");
+		//e.preventDefault();
+		//var $form = $('#overtimeForm');
+
+		$.ajax({
+			url:"insert.php",
+			method:"POST",
+			data: $('form#overtimeForm').serialize(),
+			//dataType:"json",
+
+			success:function(data){
+				console.log(data);
+				
+			},
+			error: function(error) {
+            	alert(error);
+        	}
+		});		
+	});
+
 });

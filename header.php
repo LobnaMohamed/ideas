@@ -108,12 +108,15 @@
 						</ul>
 					</div>
 					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">طور شركتك بفكرتك!
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">بنك الأفكار
 						<span class="caret"></span><img height="23px" width="50px" src="images/new-purple-animation.gif"></button>
 						<ul class="dropdown-menu dropdown-menu-right">
-							<li><a href="ideamodel.php">طور شركتك بفكرتك!</a></li>
+							<li><a href="ideamodel.php">إرسال فكرة</a></li>
 							<li><a href="pendingideas.php">الافكار المطلوب تقييمها</a></li>
-							<li><a href="assignideas.php"  >اسناد الافكار</a></li>
+							<?php if($_SESSION['UserID'] == 2129 || $_SESSION['UserID'] == 2114){?>
+							
+								<li><a href="assignideas.php"  >اسناد الافكار</a></li>
+							<?php }?>
 							<li><a href="ratedideas.php">الافكار التى تم تقييمها</a></li>
 						</ul>
 					</div>

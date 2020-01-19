@@ -36,7 +36,12 @@
 		editJob();
 		header("Location:jobs.php");
 
+	}elseif(isset($_POST['submitOvertime'])){ // edit management
+		insertOvertime();
+		header("Location:overtimemodel.php");
+
 	}
+	
 		
 	include 'footer.php';
 ?>

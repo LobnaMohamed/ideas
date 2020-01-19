@@ -16,23 +16,22 @@
 		header("Location:pending.php");
 	}
 
-	if (isset($_POST['updateRating']))
+	elseif (isset($_POST['updateRating']))
 	{
 	    // Form has been submitted
 		insertRatings();
 		header("Location:pendingideas.php");
 	}
-	elseif (isset($_POST['assignideas']))
+	elseif (isset($_POST['jury1'])|| isset($_POST['jury2'])||isset($_POST['jury3']))
 	{
 	    // Form has been submitted
 		saveAssignedIdeas();
-		header("Location:assignideas.php");
+
+		// header("Location:assignideas.php");
 		
 	}
-	
-
 	//SUBMIT AGREE ON PERMITS
-	if (isset($_POST['updatePermit']))
+	elseif (isset($_POST['updatePermit']))
 	{
 	    // Form has been submitted
 
@@ -51,5 +50,6 @@
 	else
 	{
 	    // Form has not been submitted
-	    echo"nothing";
+		echo "nothing";
+		//print_r($_POST);
 	}

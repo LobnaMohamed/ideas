@@ -350,6 +350,13 @@
 					};
 					
 				echo '</td>';
+				echo'<td>';
+				
+					echo '<span ><input type="text" class="form-control"
+					name="comment['.$index.']" >';
+
+				
+			echo '</td>';
 			echo "</tr>";
 		} 
 	}
@@ -375,6 +382,22 @@
 				$stmt->bindValue(2, $rating, PDO::PARAM_INT);
 				$stmt->execute();
 
+			}
+		}
+		if(isset($_POST['comment'])){
+			$con = connect();
+			
+			//Iterate through each answer
+			foreach($_POST['comment'] as $idea => $comment) {
+
+				//insert rating in table idea ratings
+				$insertComments = "UPDATE ideasratings
+								 set comment = '$comment' 
+								 where idea_id = $idea
+								 and emp_id = {$_SESSION['UserID']}";
+				$stmt = $con->prepare($insertComments);
+				$stmt->execute();
+				//insert comments in table ideas
 			}
 		}
 	
@@ -413,55 +436,84 @@
 
 		$con = connect();
 		if(isset($_POST['jury1'])){
+			
 			foreach($_POST['jury1'] as $idea_id => $emp_jury1){
-				echo $idea_id;
-				echo $emp_jury1;
-				if($emp_jury1 >0){
-					$sql = "insert into ideasratings(emp_id,idea_id)values($emp_jury1,$idea_id)";
-					$stmt = $con->prepare($sql);
-					// $stmt->bindParam(':emp', $emp_jury1, PDO::PARAM_INT);
-					// $stmt->bindParam(':idea',$idea_id , PDO::PARAM_INT);
+				if($emp_jury1 >0 && $_POST['jury2'][$idea_id]  >0 && $_POST['jury3'][$idea_id]>0){
+					if($emp_jury1 != $_POST['jury2'][$idea_id] &&
+						$emp_jury1 != $_POST['jury3'][$idea_id] &&
+						$_POST['jury2'][$idea_id] != $_POST['jury3'][$idea_id]){
+
+						$sql = "insert into ideasratings(emp_id,idea_id)values($emp_jury1,$idea_id)";
+						$stmt = $con->prepare($sql);
+	
+						$stmt->execute();
+						$response="success";
+					}else{
+						$response =  "duplicate jury!";
+						$page="assignideas.php";
+					}
+				}else {
 					
-					//$stmt->execute(array($answer));
-					$stmt->execute();
+					$response =  "rest of jury are not set";
+					// $page="assignideas.php";
 				}
 
 			}
+		}
 		if($_POST['jury2']){
 			foreach ($_POST['jury2'] as $idea_id => $emp_jury2) {
-				echo $idea_id;
-				echo $emp_jury2;
-				if($emp_jury2>0){
-					$sql = "insert into ideasratings(emp_id,idea_id)values(:emp,:idea)";
-					$stmt = $con->prepare($sql);
-					$stmt->bindParam(':emp', $emp_jury2, PDO::PARAM_INT);
-					$stmt->bindParam(':idea', $idea_id, PDO::PARAM_INT);
-					
-					//$stmt->execute(array($answer));
-					$stmt->execute();
-				}
+				if($emp_jury2 >0 && $_POST['jury1'][$idea_id] >0 && $_POST['jury3'][$idea_id] >0 ){
+					if($emp_jury2 != $_POST['jury1'][$idea_id] &&
+						$emp_jury2 != $_POST['jury3'][$idea_id] && 
+						$_POST['jury1'][$idea_id] != $_POST['jury3'][$idea_id]){
 
+						$sql = "insert into ideasratings(emp_id,idea_id)values(:emp,:idea)";
+						$stmt = $con->prepare($sql);
+						$stmt->bindParam(':emp', $emp_jury2, PDO::PARAM_INT);
+						$stmt->bindParam(':idea', $idea_id, PDO::PARAM_INT);
+
+						$stmt->execute();
+						$response="success";
+					}else{
+						$response =  "duplicate jury!";
+						$page="assignideas.php";
+					}
+
+				}else {
+					
+					$response =  "rest of jury are not set";
+					// $page="assignideas.php";
+				}
 			}
 		}
 		if($_POST['jury3']){
 			foreach ($_POST['jury3'] as $idea_id => $emp_jury3) {
-				echo $idea_id;
-				echo $emp_jury3;
-				if($emp_jury3>0){
-					$sql = "insert into ideasratings(emp_id,idea_id)values(:emp,:idea)";
-					$stmt = $con->prepare($sql);
-					$stmt->bindParam(':emp', $emp_jury3, PDO::PARAM_INT);
-					$stmt->bindParam(':idea', $idea_id, PDO::PARAM_INT);
-					
-					//$stmt->execute(array($answer));
-					$stmt->execute();
+				if($emp_jury3>0 && $_POST['jury1'][$idea_id] >0 && $_POST['jury2'][$idea_id] >0 ){
+					if($emp_jury3 != $_POST['jury2'][$idea_id] &&
+						$emp_jury3  != $_POST['jury1'][$idea_id] &&
+						$_POST['jury2'][$idea_id] != $_POST['jury1'][$idea_id]){
+						$sql = "insert into ideasratings(emp_id,idea_id)values(:emp,:idea)";
+						$stmt = $con->prepare($sql);
+						$stmt->bindParam(':emp', $emp_jury3, PDO::PARAM_INT);
+						$stmt->bindParam(':idea', $idea_id, PDO::PARAM_INT);
+						
+						//$stmt->execute(array($answer));
+						$stmt->execute();
+						$response="success";
+						//$page="assignideas.php";
+					}else{
+						$response =  "duplicate jury!";
+						
+
+					}
+				}else {
+					$response =  "rest of jury are not set";
+					// $page="assignideas.php";
 				}
 
 			}
 		}
-
-		}
-
+		echo json_encode($response) ;
 	}
 	function getRatedideas(){
 		$con = connect();
@@ -485,10 +537,84 @@
 			echo "</tr>";
 		} 
 	}
+	function getRatedideasasEmp(){
+		$con = connect();
+		$sql = "SELECT dateCreated,idea_text,ideasratings.rating,ideasratings.comment
+				FROM ideas  INNER join ideasratings on ideas.ID = ideasratings.idea_id
+				where ideasratings.rating >0
+				and   ideasratings.emp_id = {$_SESSION['UserID']}
+				group by dateCreated,idea_text,ideas.rating";
 
+		$stmt = $con->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		//loop for rating
+		foreach($result as $row){
+
+			echo"<tr>";
+				echo"<td>".  $row['dateCreated']. "</td>";
+				echo"<td>".  $row['idea_text']. "</td>";
+				echo"<td>". $row['rating']. "</td>";
+				echo"<td>". $row['comment']. "</td>";
+
+			echo "</tr>";
+		} 
+	}
 	/****************************************************** */
+	/****************************************************************** */
+	//----------------------------------------
+	//----OVERTIME functions
+	//------------------------------------------
+	// --------------Add overtime rows function-----------------------
+	function insertOvertime(){
+		//check if user comming from a request
+		 // $_SERVER['REQUEST_METHOD'] == 'POST'
+		 if(isset($_POST['submitOvertime'])){
+			//assign variables
+			$empID=isset($_POST['empID'])? filter_var($_POST['empID'],FILTER_SANITIZE_NUMBER_INT):'';
+			$date= isset($_POST['overtimeDate'])? $_POST['overtimeDate'] :'';
+			$manager= isset($_POST['manager'])? filter_var($_POST['manager'],FILTER_SANITIZE_NUMBER_INT) :'';
+			$topManager= isset($_POST['topManager'])? $_POST['topManager'] :'';
+			$hoursTill= isset($_POST['hoursTill'])? $_POST['hoursTill'] :'';
+			$reason= isset($_POST['reason'])? $_POST['reason'] :'';
 
 
+			$overtimeType= isset($_POST['overtimeType'])? $_POST['overtimeType'] :'';
+			$username=$_SESSION['Username']; // user id
+
+			if (gethostbyaddr($_SERVER['REMOTE_ADDR']) != null){
+				$userIP = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+			}
+			else{
+				$userIP = 'undefined';
+			}
+			//adjusting date formats
+			
+			// creating array of errors
+			//$formErrors = array();
+			$manager_vacStatus = 3;
+			//echo $manager;
+			if( $manager == 0){
+				//echo "manager is zero";
+				$manager = 'NULL';
+				//echo"new manager is ".$manager;
+				$manager_vacStatus = 4;
+				//echo $manager_vacStatus;
+			}
+			if (empty($empName) || empty($empCode) ){
+				//$formErrors[] = 'username must be larger than  chars';
+				echo "name and code cant be empty";
+				// print_r($formErrors) ;
+			} else {
+				$con = connect();
+				$sql= "INSERT INTO t_overtime(emp_id,overtime_date,reason,hourstill,overtimeType,manager_id,top_manager_id,mang_id,Manager_agree,made_by_user,made_by_ip) 
+					   VALUES (".$empID.",".$vacType.",'".$date."','".$dateTo."',".$manager.",".$topManager.",".$duration." ,".$management.",".$manager_vacStatus.",'".$username."','".$userIP."')" ;
+					   
+		        $stmt = $con->prepare($sql);
+				$stmt->execute();		
+			}
+		}
+	}
 
 	// --------------Add vacation function-----------------------
 	function addVacation(){

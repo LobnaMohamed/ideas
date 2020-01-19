@@ -14,39 +14,16 @@
 	    	<!-- <img class= "col-lg-2 logo" src="images/amoc2.png"> -->
 	  	    <h1 class="col-sm-12">اسناد الافكار المطلوب تقييمها</h1>  
 	    </header>
-	    <!-- search for emp code -->
-<!-- 		<form class="navbar-form" role="search" id="searchEmp" method="GET">
-			<div class="form-group add-on">
-				<label for = "search">رقم القيد / الاسم :</label>
-				<input class="form-control" placeholder="ابحث.." name="search" id="search" type="text">
-			</div>
-		</form> -->
-		<!-- <form class="navbar-form row" role="search" id="searchEmp" method="GET" action="adminreport_forpending.php">
-			<div class="form-group add-on ">
-				<label for = "search">رقم القيد:</label>
-				<input class="form-control" placeholder=" ابحث رقم قيد" name="search" id="search" type="text"> 
-				<?php
-				// if($_SESSION['UserGroup']==7){?>
-				// 	<label for = "searchTo"> إلى:</label>
-				// 	<input class="form-control" placeholder="الى رقم قيد" name="searchTo" id="searchTo" type="text">	
-				// 	<input  type="submit" class= "form-control btn btn-primary" value="تقرير">
-				// <?php //}	?>
-			</div> 			
-		</form> -->
-
-		<!-- form to show pending vacations and confirm them -->
-	    <form class="form-horizontal row" method="POST" action="done.php"> 
-	    <!-- action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" -->
+	    <form class="form-horizontal row" id="assignideasform" name="assignideasform" method="POST"> 
+	   
 	    	<table id="pendingVac" class="table table-striped table-bordered table-responsive">		
 				<thead>
 					<tr>
 						<th class="col-xs-1"> التاريخ</th>
-
 						<th class="col-xs-4"> الفكرة</th>
 						<th class="col-xs-2">jury1</th>
 						<th class="col-xs-2">jury2</th>
 						<th class="col-xs-2">jury3</th>
-
 
 				    </tr>		
 				</thead>
@@ -54,15 +31,15 @@
 					<?php
 					//check if the logged in manager or top manager or admin then 
 					//run the corresponding function 
-						// if($_SESSION['UserGroup']==7) { //top manager
+						if($_SESSION['UserID']==2129 || $_SESSION['UserID'] == 2114) { //top manager
 							assignideas();
-						// }
+						}
 
 					?>
 				</tbody>
 			</table>
 			<div>
-				<input type="submit" name="assignideas" value="إعتمــــاد" id="ideaAgree" class="btn btn-success col-sm-2 col-sm-offset-5">
+				<input type="submit" name="saveassignedideas" value="إعتمــــاد" id="saveassignedideas" class="btn btn-success col-sm-2 col-sm-offset-5">
 			</div>			
 		 </form>		
 	</div> 
