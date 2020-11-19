@@ -34,7 +34,7 @@
 					{
 						$ip=$_SERVER['REMOTE_ADDR'];
 					}
-					echo $ip;   
+					//echo $ip;   
 		  		 ?></a>
 				<div class="navbar-brand">
 					<span><?php echo gethostbyaddr($_SERVER['REMOTE_ADDR']); ?>
